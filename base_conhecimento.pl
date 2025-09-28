@@ -129,6 +129,16 @@ monta_ranking(Ranking) :-
 
 
 %Interface
+
+apresentar_trilhas :-
+    trilha(Trilha, Desc),
+    write(Trilha),
+    write(" - "),
+    write(Desc), nl,
+    fail.
+    
+apresentar_trilhas.
+
 usuario_resposta(Index) :-
     % Lê o input do usuário, se estiver correto, cria dinamicamente um fato com base na resposta. 
     % Se estiver errado, informa o erro e faz a pergunta novamente.
@@ -152,16 +162,55 @@ usuario_resposta(Index) :-
 
 
 faz_perguntas :-
+    % Verifica se as perguntas foram passadas pelo consult
     % Pega a pergunta com base no índice
     pergunta(Index, Texto, _),
-    % Imprime na tela
-    write(Texto), 
- 	  nl,
-    % Pega a resposta do usuário
-    usuario_resposta(Index),
+    (  resposta(Index, _) ->  true 
+    	; % Imprime na tela
+        (   write(Texto), 
+        nl,
+        % Pega a resposta do usuário
+        usuario_resposta(Index)
+        )
+    ),
+    % Faz o prolog pegar a próxima pergunta
     fail.
 
+faz_perguntas.
 
+exibir_ranking([], Nivel) :-
+    Nivel > 5, !.
+ 
+exibir_ranking([(Pontos, Trilha)|T], Nivel) :-
+    write(Nivel), 
+    write(" - "),
+	write(Trilha), 
+	write(" com "),
+	write(Pontos),
+    write(" pontos."),
+	nl,
+    Next is Nivel + 1,
+	exibir_ranking(T, Next).
+
+exibe_resultado([(Pontos, Trilha)|T]) :-
+    write("***** Trilha Recomendada *****"),nl,
+    write(Trilha), nl,
+    write("**** Ranking das Trilhas com base nas suas respostas *****"), nl,
+    exibir_ranking([(Pontos, Trilha)|T], 1).
+    
+    
+    
+iniciar :- 
+    write("*** Apresentação das Trilhas ***"), nl,
+    apresentar_trilhas,
+    write("*** Perguntas sobre afinidades ***"), nl,
+    (   consult("perfil_1.pl") -> true ; true),
+    (   consult("perfil_2.pl") -> true ; true),
+    (   consult("perfil_3.pl") -> true ; true),
+    faz_perguntas,
+    monta_ranking(Ranking),
+   	write("*** Resultado ***"), nl,
+    exibe_resultado(Ranking).
 
 
                                    
