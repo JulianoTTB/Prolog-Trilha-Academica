@@ -1,3 +1,4 @@
+:- dynamic interesse/3.
 % Trilhas de Especialização
 trilha(ciberseguranca, 'Proteção de dados e sistemas contra ameaças digitais').
 trilha(inteligencia_artificial, 'Criação de sistemas inteligentes capazes de aprender e tomar decisões').
@@ -38,17 +39,54 @@ perfil(ciencia_de_dados, software, 4).
 
 
 % Perguntas
-pergunta(1, "Você tem afinidade com matemática e estatística (1-5)?", matematica_e_estatistica).
-pergunta(2, "Você tem afinidade com sistemas e redes (1-5)?", sistemas_e_redes).
-pergunta(3, "Avalie o seu pensamento critico (1-5)?", pensamento_critico).
-pergunta(4, "Você tem afinidade com criptografia (1-5)?", criptografia).
-pergunta(5, "Avalie o seu nível em programação (1-5)?", programacao).
-pergunta(6, "Você tem afinidade com software (1-5)?", software).
-pergunta(7, "Você tem afinidade com aprendizado de máquina (1-5)?", machine_learning).
-pergunta(8, "Você tem afinidade com harware (1-5)?", hardware).
-pergunta(9, "Você tem afinidade com eletrônica (1-5)?", eletronica).
-pergunta(10, "Você tem afinidade com matemática discreta (1-5)?", matematica_discreta).
-pergunta(11, "Você tem afinidade com otimização de sistema (1-5)?", otimizacao_sistema).
-pergunta(12, "Você tem afinidade com análise de dados (1-5)?", analise_de_dados).
-pergunta(13, "Você tem afinidade com padrões e tendências (1-5)?", padroes_e_tendencias).
+pergunta(1, "Você tem afinidade com matemática e estatística?", matematica_e_estatistica).
+pergunta(2, "Você tem afinidade com sistemas e redes?", sistemas_e_redes).
+pergunta(3, "Você tem pensamento critico?", pensamento_critico).
+pergunta(4, "Você tem afinidade com criptografia?", criptografia).
+pergunta(5, "Você sabe programar?", programacao).
+pergunta(6, "Você tem afinidade com software?", software).
+pergunta(7, "Você tem afinidade com aprendizado de máquina?", machine_learning).
+pergunta(8, "Você tem afinidade com harware?", hardware).
+pergunta(9, "Você tem afinidade com eletrônica?", eletronica).
+pergunta(10, "Você tem afinidade com matemática discreta?", matematica_discreta).
+pergunta(11, "Você tem afinidade com otimização de sistema?", otimizacao_sistema).
+pergunta(12, "Você tem afinidade com análise de dados?", analise_de_dados).
+pergunta(13, "Você tem afinidade com padrões e tendências?", padroes_e_tendencias).
+
+
+%Interface
+
+usuario_resposta(Index, Categoria) :-
+	read_line_to_string(user_input, Resposta),
+    (   number_string(N, Resposta), integer(N) -> 
+    		write("Entrada inválida!! Digite sim ou não."), nl,
+        	usuario_resposta(Index, Categoria)
+    	;   
+    	sub_atom(Resposta, 0, 1, _, "s") ->  
+    		assertz(interesse(Index, Categoria, "s"))
+    	;
+    	sub_atom(Resposta, 0, 1, _, "S") ->  
+    		assertz(interesse(Index, Categoria, "s"))
+    	;   
+    	sub_atom(Resposta, 0, 1, _, "n") ->  
+    		assertz(interesse(Index, Categoria, "n"))
+    	;
+    	sub_atom(Resposta, 0, 1, _, "N") ->  
+    		assertz(interesse(Index, Categoria, "s"))
+    	;   
+			write("Entrada inválida!! Digite sim ou não."), nl,
+        	usuario_resposta(Index, Categoria)
+	).
+    
+
+faz_perguntas(Index) :-
+    Index > 13, !.
+
+faz_perguntas(Index) :-
+    pergunta(Index, Texto, Categoria),
+    write(Texto), 
+ 	nl,
+    usuario_resposta(Index, Categoria),
+    Next is Index + 1,
+    faz_perguntas(Next).
 
