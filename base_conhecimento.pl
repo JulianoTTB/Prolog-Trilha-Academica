@@ -104,36 +104,43 @@ pergunta(13, "Você tem afinidade com padrões e tendências?", padroes_e_tenden
 %Interface
 
 usuario_resposta(Index, Categoria) :-
+    % Lê o input do usuário, se estiver correto, cria dinamicamente um fato com base na resposta. 
+    % Se estiver errado, informa o erro e faz a pergunta novamente.
 	read_line_to_string(user_input, Resposta),
-    (   number_string(N, Resposta), integer(N) -> 
-    		write("Entrada inválida!! Digite sim ou não."), nl,
+    (   number_string(N, Resposta), integer(N) -> % Verifica se é um inteiro a resposta
+    		% Se for um inteiro, informa que é uma entrada inválida e faz a pergunta novamente
+    		  write("Entrada inválida!! Digite sim ou não."), nl,
         	usuario_resposta(Index, Categoria)
-    	;   
-    	sub_atom(Resposta, 0, 1, _, "s") ->  
-    		assertz(interesse(Index, Categoria, "s"))
-    	;
-    	sub_atom(Resposta, 0, 1, _, "S") ->  
-    		assertz(interesse(Index, Categoria, "s"))
-    	;   
-    	sub_atom(Resposta, 0, 1, _, "n") ->  
-    		assertz(interesse(Index, Categoria, "n"))
-    	;
-    	sub_atom(Resposta, 0, 1, _, "N") ->  
-    		assertz(interesse(Index, Categoria, "s"))
-    	;   
-			write("Entrada inválida!! Digite sim ou não."), nl,
-        	usuario_resposta(Index, Categoria)
+    	; % Verifica se o primeiro caractere da resposta é s, se for a resposta é sim
+    	( 	sub_atom(Resposta, 0, 1, _, "s") ->  
+    			assertz(interesse(Index, Categoria, "s"))
+    		;
+    			assertz(interesse(Index, Categoria, "s"))  
+         )   
+    	;% Verifica se o primeiro caractere da resposta é n, se for a resposta é não
+    	(	sub_atom(Resposta, 0, 1, _, "n") ->  
+    			assertz(interesse(Index, Categoria, "n"))
+    		;
+    			assertz(interesse(Index, Categoria, "n"))   
+         )   
+    	; % Se o primeiro caractere não for nem s e nem n, a entrada é inválida.   
+		  	  write("Entrada inválida!! Digite sim ou não."), nl,
+          usuario_resposta(Index, Categoria)
 	).
     
 
 faz_perguntas(Index) :-
+    % Condição de parada: índice for maior que 13, visto que há apenas 13 tipos de conhecimento
     Index > 13, !.
 
 faz_perguntas(Index) :-
+    % Pega a pergunta com base no índice
     pergunta(Index, Texto, Categoria),
+    % Imprime na tela
     write(Texto), 
- 	nl,
+ 	  nl,
+    % Pega a resposta do usuário
     usuario_resposta(Index, Categoria),
+    % Cálcula o próximo índice
     Next is Index + 1,
     faz_perguntas(Next).
-
