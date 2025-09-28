@@ -1,4 +1,4 @@
-:- dynamic interesse/3.
+:- dynamic resposta/2.
 % Trilhas de Especialização
 trilha(ciberseguranca, 'Proteção de dados e sistemas contra ameaças digitais').
 trilha(inteligencia_artificial, 'Criação de sistemas inteligentes capazes de aprender e tomar decisões').
@@ -103,45 +103,34 @@ pergunta(13, "Você tem afinidade com padrões e tendências?", padroes_e_tenden
 
 
 %Interface
-
-usuario_resposta(Index, Categoria) :-
+usuario_resposta(Index) :-
     % Lê o input do usuário, se estiver correto, cria dinamicamente um fato com base na resposta. 
     % Se estiver errado, informa o erro e faz a pergunta novamente.
 	read_line_to_string(user_input, Resposta),
     (   number_string(N, Resposta), integer(N) -> % Verifica se é um inteiro a resposta
     		% Se for um inteiro, informa que é uma entrada inválida e faz a pergunta novamente
-    		  write("Entrada inválida!! Digite sim ou não."), nl,
-        	usuario_resposta(Index, Categoria)
+    		write("Entrada inválida!! Digite sim ou não."), nl,
+        	usuario_resposta(Index)
     	; % Verifica se o primeiro caractere da resposta é s, se for a resposta é sim
-    	( 	sub_atom(Resposta, 0, 1, _, "s") ->  
-    			assertz(interesse(Index, Categoria, "s"))
-    		;
-    			assertz(interesse(Index, Categoria, "s"))  
-         )   
-    	;% Verifica se o primeiro caractere da resposta é n, se for a resposta é não
-    	(	sub_atom(Resposta, 0, 1, _, "n") ->  
-    			assertz(interesse(Index, Categoria, "n"))
-    		;
-    			assertz(interesse(Index, Categoria, "n"))   
-         )   
-    	; % Se o primeiro caractere não for nem s e nem n, a entrada é inválida.   
-		  	  write("Entrada inválida!! Digite sim ou não."), nl,
-          usuario_resposta(Index, Categoria)
-	).
+		(   (   sub_atom(Resposta, 0, 1, _, "s") ; sub_atom(Resposta, 0, 1, _, "S") ) ->  
+    				assertz(resposta(Index, "s"))
+            ;% Verifica se o primeiro caractere da resposta é n, se for a resposta é não
+            (   sub_atom(Resposta, 0, 1, _, "n") ; sub_atom(Resposta, 0, 1, _, "N") ) ->  
+                    assertz(resposta(Index, "n"))
+        	;   
+        	write("Entrada inválida!! Digite sim ou não."), nl,
+        	usuario_resposta(Index)
+		)
+    ).
     
 
-faz_perguntas(Index) :-
-    % Condição de parada: índice for maior que 13, visto que há apenas 13 tipos de conhecimento
-    Index > 13, !.
 
-faz_perguntas(Index) :-
+faz_perguntas :-
     % Pega a pergunta com base no índice
-    pergunta(Index, Texto, Categoria),
+    pergunta(Index, Texto, _),
     % Imprime na tela
     write(Texto), 
  	  nl,
     % Pega a resposta do usuário
-    usuario_resposta(Index, Categoria),
-    % Calcula o próximo índice
-    Next is Index + 1,
-    faz_perguntas(Next).
+    usuario_resposta(Index),
+    fail.
