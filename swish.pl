@@ -35,3 +35,20 @@ perfil(ciencia_de_dados, matematica_e_estatistica, 5).
 perfil(ciencia_de_dados, analise_de_dados, 5).
 perfil(ciencia_de_dados, padroes_e_tendencias, 5).
 perfil(ciencia_de_dados, software, 4).
+
+
+% Perguntas
+pergunta(1, "Você tem afinidade com matemática e estatística (1-5)?", matematica_e_estatistica).
+pergunta(2, "Você tem afinidade com sistemas e redes (1-5)?", sistemas_e_redes).
+pergunta(3, "Avalie o seu pensamento critico (1-5)?", pensamento_critico).
+pergunta(4, "Você tem afinidade com criptografia (1-5)?", criptografia).
+pergunta(5, "Avalie o seu nível em programação (1-5)?", programacao).
+pergunta(6, "Você tem afinidade com software (1-5)?", software).
+pergunta(7, "Você tem afinidade com aprendizado de máquina (1-5)?", machine_learning).
+pergunta(8, "Você tem afinidade com harware (1-5)?", hardware).
+pergunta(9, "Você tem afinidade com eletrônica (1-5)?", eletronica).
+pergunta(10, "Você tem afinidade com matemática discreta (1-5)?", matematica_discreta).
+pergunta(11, "Você tem afinidade com otimização de sistema (1-5)?", otimizacao_sistema).
+pergunta(12, "Você tem afinidade com análise de dados (1-5)?", analise_de_dados).
+pergunta(13, "Você tem afinidade com padrões e tendências (1-5)?", padroes_e_tendencias).
+
