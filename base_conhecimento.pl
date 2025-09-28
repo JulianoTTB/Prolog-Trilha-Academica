@@ -128,9 +128,12 @@ usuario_resposta(Index) :-
 faz_perguntas :-
     % Pega a pergunta com base no índice
     pergunta(Index, Texto, _),
-    % Imprime na tela
+    (  resposta(Index, _) ->  true % Verifica se as perguntas foram passadas pelo consult
+    ; % Imprime na tela
     write(Texto), 
- 	  nl,
+ 	nl,
     % Pega a resposta do usuário
     usuario_resposta(Index),
+    % Faz o prolog pegar a próxima pergunta
+    ),
     fail.
