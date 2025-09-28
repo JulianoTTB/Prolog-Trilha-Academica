@@ -141,6 +141,6 @@ faz_perguntas(Index) :-
  	  nl,
     % Pega a resposta do usuário
     usuario_resposta(Index, Categoria),
-    % Cálcula o próximo índice
+    % Calcula o próximo índice
     Next is Index + 1,
     faz_perguntas(Next).
