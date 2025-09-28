@@ -117,7 +117,7 @@ calcula_pontuacao(Trilha, Pontos) :-
 
 recomenda(Trilha, Pontos) :-
     % Verifica se as trilhas são válidas através do nome e chama o predicado calcula, para calcular o peso 
-    trilha(Trilha, _), calcula(Trilha, Pontos).
+    trilha(Trilha, _), calcula_pontuacao(Trilha, Pontos).
     
 monta_ranking(Ranking) :-
     % O findall busca as trilhas com os pontos utilizando recomenda
