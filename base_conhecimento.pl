@@ -131,10 +131,12 @@ monta_ranking(Ranking) :-
 %Interface
 
 apresentar_trilhas :-
+  % imprime "Trilha - [Descrição]"
     trilha(Trilha, Desc),
     write(Trilha),
     write(" - "),
     write(Desc), nl,
+    % Vai para a próxima trilha
     fail.
     
 apresentar_trilhas.
@@ -179,9 +181,11 @@ faz_perguntas :-
 faz_perguntas.
 
 exibir_ranking([], Nivel) :-
+  % Condição de parada: Nivel for maior que o número de trilhas disponíveis
     Nivel > 5, !.
  
 exibir_ranking([(Pontos, Trilha)|T], Nivel) :-
+  % imprime "Nivel° - Nome da trilha com [sua pontuação]"
     write(Nivel), 
     write(" - "),
 	write(Trilha), 
@@ -189,9 +193,11 @@ exibir_ranking([(Pontos, Trilha)|T], Nivel) :-
 	write(Pontos),
     write(" pontos."),
 	nl,
+  % Parte para a próxima trilha
     Next is Nivel + 1,
 	exibir_ranking(T, Next).
 
+% Exibe o resultado: Trilhas com maior pontuação -> Ranking de todas as trilhas
 exibe_resultado([(Pontos, Trilha)|T]) :-
     write("***** Trilha Recomendada *****"),nl,
     write(Trilha), nl,
@@ -199,46 +205,20 @@ exibe_resultado([(Pontos, Trilha)|T]) :-
     exibir_ranking([(Pontos, Trilha)|T], 1).
     
     
-    
+ % Apresenta as trilhas -> faz perguntas -> monta o ranking das trilhas com base nas respostas -> exibe o resultado   
 iniciar :- 
     write("*** Apresentação das Trilhas ***"), nl,
-    apresentar_trilhas,
+    apresentar_trilhas, % Apresenta as trilhas disponíveis com suas descrições
     write("*** Perguntas sobre afinidades ***"), nl,
+    % Verifica e carrega, se existir, arquivos com perfis prontos
+    % No prolog web é necessário comentar as linhas abaixo
+    % No prolog terminal é só ter um dos perfis abaixo no mesmo diretório do arquivo base_conhecimento
     (   consult("perfil_1.pl") -> true ; true),
     (   consult("perfil_2.pl") -> true ; true),
     (   consult("perfil_3.pl") -> true ; true),
-    faz_perguntas,
-    monta_ranking(Ranking),
+    faz_perguntas, % Faz as perguntas
+    monta_ranking(Ranking), % Calcula a pontuação das trilhas e monta o ranking
    	write("*** Resultado ***"), nl,
-    exibe_resultado(Ranking).
+    exibe_resultado(Ranking). % Exibe o resultado obtido
 
 
-                                   
-                                   
-                                   
-                                   
-                                   
-                                   
-                                   
-                                   
-                                   
-                                   
-                                   
-                                   
-                                   
-                                   
-                                   
-                                   
-                                   
-                                   
-                                   
-                                   
-                                   
-                                   
-                                   
-                                   
-                                   
-                                   
-                                   
-                                   
-                                   
