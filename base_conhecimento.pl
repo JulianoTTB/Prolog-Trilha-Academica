@@ -102,6 +102,32 @@ pergunta(12, "Você tem afinidade com análise de dados?", analise_de_dados).
 pergunta(13, "Você tem afinidade com padrões e tendências?", padroes_e_tendencias).
 
 
+% MOTOR DE INFERENCIA
+% É inserido o a trilha desejada para o calculo dos pontos
+calcula_pontuacao(Trilha, Pontos) :-
+% O findall busca o peso com base nas respostas "sim" que o usuario colocou
+    findall(Peso, (resposta(Index, "s"),
+                      % Ele liga as respostas com as perguntas
+                      pergunta(Index, _, Categoria),
+                      % por fim verifica qual trilha e que peso corresponde as perguntas que ele respondeu
+                  	  % e faz uma lista com todos os pesos da trilha
+                      perfil(Trilha, Categoria, Peso)), ListaPesos),
+    % soma todos os pesos e retorna um valor unico
+    sum_list(ListaPesos, Pontos).
+
+recomenda(Trilha, Pontos) :-
+    % Verifica se as trilhas são válidas através do nome e chama o predicado calcula, para calcular o peso 
+    trilha(Trilha, _), calcula(Trilha, Pontos).
+    
+monta_ranking(Ranking) :-
+    % O findall busca as trilhas com os pontos utilizando recomenda
+    findall((Pontos, Trilha), recomenda(Trilha, Pontos),
+            % e organiza numa lista no formato de pontos e trilha
+            Lista),
+    % por fim ele organiza essa lista do maior para o menor e retorna o ranking
+    sort(0, @>=, Lista, Ranking).
+
+
 %Interface
 usuario_resposta(Index) :-
     % Lê o input do usuário, se estiver correto, cria dinamicamente um fato com base na resposta. 
@@ -128,12 +154,42 @@ usuario_resposta(Index) :-
 faz_perguntas :-
     % Pega a pergunta com base no índice
     pergunta(Index, Texto, _),
-    (  resposta(Index, _) ->  true % Verifica se as perguntas foram passadas pelo consult
-    ; % Imprime na tela
+    % Imprime na tela
     write(Texto), 
- 	nl,
+ 	  nl,
     % Pega a resposta do usuário
     usuario_resposta(Index),
-    % Faz o prolog pegar a próxima pergunta
-    ),
     fail.
+
+
+
+
+                                   
+                                   
+                                   
+                                   
+                                   
+                                   
+                                   
+                                   
+                                   
+                                   
+                                   
+                                   
+                                   
+                                   
+                                   
+                                   
+                                   
+                                   
+                                   
+                                   
+                                   
+                                   
+                                   
+                                   
+                                   
+                                   
+                                   
+                                   
+                                   
