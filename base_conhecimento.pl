@@ -94,7 +94,7 @@ pergunta(4, "Você tem afinidade com criptografia?", criptografia).
 pergunta(5, "Você sabe programar?", programacao).
 pergunta(6, "Você tem afinidade com software?", software).
 pergunta(7, "Você tem afinidade com aprendizado de máquina?", machine_learning).
-pergunta(8, "Você tem afinidade com harware?", hardware).
+pergunta(8, "Você tem afinidade com hardware?", hardware).
 pergunta(9, "Você tem afinidade com eletrônica?", eletronica).
 pergunta(10, "Você tem afinidade com matemática discreta?", matematica_discreta).
 pergunta(11, "Você tem afinidade com otimização de sistema?", otimizacao_sistemas).
