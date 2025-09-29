@@ -97,7 +97,7 @@ pergunta(7, "Você tem afinidade com aprendizado de máquina?", machine_learning
 pergunta(8, "Você tem afinidade com harware?", hardware).
 pergunta(9, "Você tem afinidade com eletrônica?", eletronica).
 pergunta(10, "Você tem afinidade com matemática discreta?", matematica_discreta).
-pergunta(11, "Você tem afinidade com otimização de sistema?", otimizacao_sistema).
+pergunta(11, "Você tem afinidade com otimização de sistema?", otimizacao_sistemas).
 pergunta(12, "Você tem afinidade com análise de dados?", analise_de_dados).
 pergunta(13, "Você tem afinidade com padrões e tendências?", padroes_e_tendencias).
 
