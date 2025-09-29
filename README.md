@@ -1,5 +1,14 @@
 # Prolog-Trilha-Academica
 
+## Instituição:
+**Pontifícia Universidade Católica do Paraná - PUCPR**
+
+## Disciplina:
+**Programação Lógica e Funcional**
+
+## Professor:
+**Frank Coelho de Alcantara**
+
 ## ALUNOS:
 **Alisson Daledone**
 **Geandro Marques**
